@@ -8,7 +8,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "kubectl-count",
+	Use:   "kubectl count",
 	Short: "A kubectl plugin for counting kubernetes resources.",
 	Long:  `A kubectl plugin for counting kubernetes resources, which can also be filtered using namespaces and label selectors.`,
 }

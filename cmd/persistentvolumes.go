@@ -17,11 +17,6 @@ var persistentvolumesCmd = &cobra.Command{
 	Long:    `Count persistentvolumes in a cluster, optionally filtered by a label.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		selector, err := cmd.Flags().GetString("selector")
-		if err != nil {
-			panic(err)
-		}
-
 		listOptions := metav1.ListOptions{}
 		if selector != "" {
 			listOptions.LabelSelector = selector
@@ -39,5 +34,5 @@ var persistentvolumesCmd = &cobra.Command{
 func init() {
 	countCmd.AddCommand(persistentvolumesCmd)
 
-	persistentvolumesCmd.PersistentFlags().StringP("selector", "l", "", "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.")
+	persistentvolumesCmd.PersistentFlags().StringVarP(&selector, "selector", "l", "", "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.")
 }

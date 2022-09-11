@@ -17,23 +17,8 @@ var daemonsetsCmd = &cobra.Command{
 	Long:    `Count daemonsets in a namespace, optionally filtered by a label.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		var namespace string
-
-		allNamespaces, err := cmd.Flags().GetBool("all-namespaces")
-		if err != nil {
-			panic(err)
-		}
-
-		if !allNamespaces {
-			namespace, err = cmd.Flags().GetString("namespace")
-			if err != nil {
-				panic(err)
-			}
-		}
-
-		selector, err := cmd.Flags().GetString("selector")
-		if err != nil {
-			panic(err)
+		if allNamespaces {
+			namespace = ""
 		}
 
 		listOptions := metav1.ListOptions{}
@@ -53,7 +38,7 @@ var daemonsetsCmd = &cobra.Command{
 func init() {
 	countCmd.AddCommand(daemonsetsCmd)
 
-	daemonsetsCmd.PersistentFlags().BoolP("all-namespaces", "A", false, "If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.")
-	daemonsetsCmd.PersistentFlags().StringP("namespace", "n", "default", "resource namespace")
-	daemonsetsCmd.PersistentFlags().StringP("selector", "l", "", "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.")
+	daemonsetsCmd.PersistentFlags().BoolVarP(&allNamespaces, "all-namespaces", "A", false, "If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.")
+	daemonsetsCmd.PersistentFlags().StringVarP(&namespace, "namespace", "n", "default", "resource namespace")
+	daemonsetsCmd.PersistentFlags().StringVarP(&selector, "selector", "l", "", "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching objects must satisfy all of the specified label constraints.")
 }

@@ -7,6 +7,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var allNamespaces bool
+var namespace string
+var selector string
+
 // countCmd represents the count command
 var countCmd = &cobra.Command{
 	Use:   "count",
